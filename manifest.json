@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Shopify Peek",
+  "description": "Shopify store/theme information with the click of a button.",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "server_worker": [
+      "background.js"
+    ]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Shopify Peek"
+  }
+}
