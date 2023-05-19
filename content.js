@@ -1,3 +1,4 @@
+let response = {};
 let themeInfo = '';
 let shopUrl = '';
 let shopLocation = 'en';
@@ -10,6 +11,7 @@ const cleanInfo = (info) => {
 };
 
 const scripts = Array.from(document.getElementsByTagName('script'));
+console.log(scripts);
 scripts.forEach((script) => {
 	if (script.innerHTML.indexOf('Shopify.theme') !== -1) {
 		const html = script.innerHTML.split(';');
@@ -19,8 +21,6 @@ scripts.forEach((script) => {
 				themeInfo = cleanInfo(line);
 			} else if (line.includes('Shopify.shop =')) {
 				shopUrl = cleanInfo(line);
-			} else if (line.includes('Shopify.locale =')) {
-				shopLanguage = cleanInfo(line);
 			} else if (line.includes('Shopify.currency =')) {
 				storeCurrency = cleanInfo(line);
 			}
@@ -29,11 +29,16 @@ scripts.forEach((script) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	sendResponse({
-		themeInfo: themeInfo,
-		shopUrl: shopUrl,
-		shopLanguage: shopLanguage,
-		storeCurrency: storeCurrency,
-		pathname: pathname,
-	});
+	if (themeInfo) {
+		response = {
+			store: true,
+			themeInfo: themeInfo,
+			shopUrl: shopUrl,
+			storeCurrency: storeCurrency,
+			pathname: pathname,
+		};
+	} else {
+		response = { store: false };
+	}
+	sendResponse(response);
 });

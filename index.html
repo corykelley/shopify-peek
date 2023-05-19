@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles.css" />
   <title>Shopify Peek</title>
 </head>
+
 <body>
-<section class="container">
-  <div class="header-info">
-    <h2>Shopify Peek 👀</h2>
-    <p>A simple browser snapshot of Shopify theme information!</p>
-  </div>
-  <ul>
-    <li>
-      <h4>Theme Url:</h4>
-      <p data-theme-url></p>
-    </li>
-    <li>
-      <h4>Theme Name:</h4>
-      <p data-theme-name></p>
-    </li>
-    <li>
-      <h4>Theme Id:</h4>
-      <p data-theme-id></p>
-    </li>
-    <li>
-      <h4>Store Language:</h4>
-      <p data-store-language></p>
-    </li>
-    <li>
-      <h4>Store Currency:</h4>
-      <p data-store-currency></p>
-    </li>
-    <li>
-      <h4>Theme is published?:</h4>
-      <p data-published></p>
-    </li>
-  </ul>
-</section>
-<script src="background.js"></script>
+  <section class="container">
+    <div class="header-info">
+      <h2>Shopify Peek 👀</h2>
+      <p>A simple browser snapshot of Shopify theme information!</p>
+    </div>
+    <div class="not-a-shop">
+      <h3>Uh oh... Looks like this isn't a Shopify store!</h3>
+    </div>
+    <div class="shop-info hidden">
+      <ul>
+        <li>
+          <h4>Theme Url:</h4>
+          <p data-theme-url></p>
+        </li>
+        <li>
+          <h4>Theme Name:</h4>
+          <p data-theme-name></p>
+        </li>
+        <li>
+          <h4>Theme Id:</h4>
+          <p data-theme-id></p>
+        </li>
+        <li>
+          <h4>Store Currency:</h4>
+          <p data-store-currency></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <script src="background.js"></script>
 </body>
+
 </html>
