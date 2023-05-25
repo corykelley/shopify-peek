@@ -36,21 +36,21 @@ scripts.forEach((script) => {
 		fetch(`${window.location.href.split('?')[0]}.json`)
 			.then((res) => res.json())
 			.then((data) => (info = data));
-	}
-});
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	if (themeInfo) {
-		response = {
-			store: true,
-			themeInfo: themeInfo,
-			shopUrl: shopUrl,
-			storeCurrency: storeCurrency,
-			pathname: pathname,
-			origin: origin,
-			type: type,
-			info: info,
-		};
+		chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+			if (themeInfo) {
+				response = {
+					store: true,
+					themeInfo: themeInfo,
+					shopUrl: shopUrl,
+					storeCurrency: storeCurrency,
+					pathname: pathname,
+					origin: origin,
+					type: type,
+					info: info,
+				};
+			}
+			sendResponse(response);
+		});
 	}
-	sendResponse(response);
 });
