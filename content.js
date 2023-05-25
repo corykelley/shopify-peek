@@ -1,9 +1,10 @@
-let response = {};
-let themeInfo = '';
+let response = { store: false };
+let themeInfo = {};
 let shopUrl = '';
-let shopLocation = 'en';
 let storeCurrency = 'USD';
 let published = false;
+let type = 'home';
+let info = {};
 const pathname = window.location.pathname || null;
 
 const cleanInfo = (info) => {
@@ -11,7 +12,6 @@ const cleanInfo = (info) => {
 };
 
 const scripts = Array.from(document.getElementsByTagName('script'));
-console.log(scripts);
 scripts.forEach((script) => {
 	if (script.innerHTML.indexOf('Shopify.theme') !== -1) {
 		const html = script.innerHTML.split(';');
@@ -25,6 +25,16 @@ scripts.forEach((script) => {
 				storeCurrency = cleanInfo(line);
 			}
 		});
+
+		if (pathname.includes('products')) {
+			type = 'product';
+		} else if (pathname.includes('cart')) {
+			type = 'cart';
+		}
+
+		fetch(`${window.location.href.split('?')[0]}.json`)
+			.then((res) => res.json())
+			.then((data) => (info = data));
 	}
 });
 
@@ -36,9 +46,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			shopUrl: shopUrl,
 			storeCurrency: storeCurrency,
 			pathname: pathname,
+			type: type,
+			info: info,
 		};
-	} else {
-		response = { store: false };
 	}
 	sendResponse(response);
 });

@@ -4,6 +4,19 @@ const themeId = document.querySelector('[data-theme-id]');
 const storeCurrency = document.querySelector('[data-store-currency]');
 const notAStoreContainer = document.querySelector('.not-a-shop');
 const storeContentContainer = document.querySelector('.shop-info');
+const productInfoBtn = document.querySelector('[data-product-info-btn]');
+const cartInfoBtn = document.querySelector('[data-cart-info-btn]');
+
+const handleInfoButtons = (info) => {
+	if (info) {
+		productInfoBtn.addEventListener('click', () => {
+			const html = `
+
+      `;
+			storeContentContainer.innerHTML = info.product.title;
+		});
+	}
+};
 
 async function getCurrentTab() {
 	let queryOptions = { active: true, lastFocusedWindow: true };
@@ -21,6 +34,20 @@ async function getCurrentTab() {
 			themeName.innerHTML = response.themeInfo.name;
 			themeId.innerHTML = response.themeInfo.id;
 			storeCurrency.innerHTML = response.storeCurrency.active;
+
+			console.log(response);
+			switch (response.type) {
+				case 'product':
+					productInfoBtn.disabled = false;
+					productInfoBtn.classList.remove('disabled');
+					handleInfoButtons(response.info);
+					break;
+				case 'cart':
+					cartInfoBtn.disabled = false;
+					cartInfoBtn.classList.remove('disabled');
+					handleInfoButtons(response.info);
+					break;
+			}
 
 			storeContentContainer.classList.remove('hidden');
 			notAStoreContainer.classList.add('hidden');
