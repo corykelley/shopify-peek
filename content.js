@@ -6,6 +6,7 @@ let published = false;
 let type = 'home';
 let info = {};
 const pathname = window.location.pathname || null;
+const origin = window.location.origin;
 
 const cleanInfo = (info) => {
 	return JSON.parse(info.split(' = ')[1]);
@@ -46,6 +47,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 			shopUrl: shopUrl,
 			storeCurrency: storeCurrency,
 			pathname: pathname,
+			origin: origin,
 			type: type,
 			info: info,
 		};
