@@ -9,13 +9,18 @@ const productInfoBtn = document.querySelector('[data-product-info-btn]');
 const cartInfoBtn = document.querySelector('[data-cart-info-btn]');
 const backBtn = document.querySelector('[data-back-btn]');
 
+const convertPrice = (price) => {
+	let converted = (price / 100).toFixed(2) * 1;
+	return `$${converted}`;
+};
+
 const toggleBtnState = (type) => {
 	if (type == 'product') {
 		productInfoBtn.disabled = false;
-		productInfoBtn.classList.remove('disabled');
+		productInfoBtn.classList.remove('!cursor-not-allowed');
 	} else if (type == 'cart') {
 		cartInfoBtn.disabled = false;
-		cartInfoBtn.classList.remove('disabled');
+		cartInfoBtn.classList.remove('!cursor-not-allowed');
 	}
 };
 
@@ -37,16 +42,29 @@ const handleInfoButtons = (type, info, origin) => {
 	if (type == 'product') {
 		productInfoBtn.addEventListener('click', () => {
 			showHideBtns(false);
-			let variantHtml = `<li><h4>Variants:</h4><ul>`;
+			let variantHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Variants:</span></h4><ul>`;
+			let imageHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Images:</span></h4><ul>`;
 
 			if (info.product.variants.length) {
 				info.product.variants.forEach((variant) => {
 					variantHtml += `
-            <li>
-              <p>Title: ${variant.title}</p>
-              <p>Id: ${variant.id}</p>
-              <p>Price: ${variant.price}</p>
-              <p>SKU: ${variant.sku}</p>
+            <li class="mb-3 pl-1">
+            <ul>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Title: </span>${variant.title}</li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Id: </span>${variant.id}</li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Price: </span>$${
+									variant.price
+								}</li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Compare At Price: </span>$${
+									variant.compare_at_price ? variant.compare_at_price : 0
+								}</li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">sku: </span>${variant.sku}</li>
+            </ul>
             </li>
           `;
 				});
@@ -54,21 +72,42 @@ const handleInfoButtons = (type, info, origin) => {
 				variantHtml += `</ul></li>`;
 			}
 
+			if (info.product.images.length) {
+				info.product.images.forEach((image) => {
+					imageHtml += `
+            <li class="mb-3 pl-1">
+            <ul>
+              <li class="text-s pl-1 tracking-wide">
+                <img class="rounded-md border border-slate-200 mb-2" loading="lazy" alt="${image.alt}" src="${image.src}" />
+              </li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Id: </span>${image.id}</li>
+              <li class="text-s pl-1 tracking-wide">
+                <span class="mr-1 lowercase">Alt: </span>${image.alt}</li>
+            </ul>
+            </li>
+          `;
+				});
+
+				imageHtml += `</ul></li>`;
+			}
+
 			html += `
         <ul>
-          <li>
-            <h4>Title:</h4>
-            <p>${info.product.title}</p>
+          <li class="mb-3">
+            <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Title:</span></h4>
+            <p class="text-base pl-1">${info.product.title}</p>
           </li>
-          <li>
-            <h4>Id:</h4>
-            <p>${info.product.id}</p>
+          <li class="mb-3">
+            <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Id:</span></h4>
+            <p class="text-base pl-1">${info.product.id}</p>
           </li>
-          <li>
-            <h4>Tags:</h4>
-            <p>${info.product.tags}</p>
+          <li class="mb-3">
+            <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Tags:</span></h4>
+            <p class="text-base pl-1">${info.product.tags}</p>
           </li>
           ${info.product.variants.length && variantHtml}
+          ${info.product.images.length && imageHtml}
         </ul>
         `;
 
@@ -79,21 +118,33 @@ const handleInfoButtons = (type, info, origin) => {
 	} else {
 		cartInfoBtn.addEventListener('click', () => {
 			showHideBtns(false);
-			let itemsHtml = `<li><h4>Items:</h4><ul>`;
-			let attHtml = `<li><h4>Attributes:</h4><ul>`;
+			let itemsHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Items:</span></h4><ul>`;
+			let attHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Attributes:</span></h4><ul>`;
 
 			if (info.items.length) {
 				info.items.forEach((item) => {
 					itemsHtml += `
-            <li>
-              <p>Title: ${item.title}</p>
-              <p>Id: ${item.id}</p>
-              <p>Price: ${item.price}</p>
-              <p>Quantity: ${item.quantity}</p>
-              <p>SKU: ${item.sku}</p>
-              <p>URL: <a href=${origin + item.url} target="_blank">${
-						origin + item.url
-					}</a></p>
+            <li class="mb-3 pl-1">
+              <ul>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">Title: </span>${item.title}</li>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">Id: </span>${item.id}</li>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">Price: </span>${convertPrice(
+										item.price
+									)}</li>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">Quantity: </span>${
+										item.quantity
+									}</li>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">SKU: </span>${item.sku}</li>
+                <li class="text-s pl-1 tracking-wide">
+                  <span class="mr-1 lowercase">URL: </span><a href=${
+										origin + item.url
+									} target="_blank">${origin + item.url}</a></li>
+              </ul>
             </li>
           `;
 				});
@@ -103,8 +154,8 @@ const handleInfoButtons = (type, info, origin) => {
 			if (info.attributes) {
 				for (const prop in info.attributes) {
 					attHtml += `
-            <li>
-              <p>${prop}: ${info.attributes[prop]}</p>
+            <li class="mb-3">
+              <p class="text-s pl-1">${prop}: ${info.attributes[prop]}</p>
             </li>
           `;
 				}
@@ -114,13 +165,13 @@ const handleInfoButtons = (type, info, origin) => {
 
 			html += `
         <ul>
-          <li>
-            <h4>Total Price:</h4>
-            <p>${info.total_price}</p>
+          <li class="mb-3">
+            <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Total Price:</span></h4>
+            <p class="text-base pl-1">${convertPrice(info.total_price)}</p>
           </li>
-          <li>
-            <h4>Item Count:</h4>
-            <p>${info.item_count}</p>
+          <li class="mb-3">
+            <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Item Count:</span></h4>
+            <p class="text-base pl-1">${info.item_count}</p>
           </li>
           ${info.items && itemsHtml}
           ${info.attributes && attHtml}

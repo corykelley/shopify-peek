@@ -5,50 +5,75 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <title>Shopify Peek</title>
 </head>
 
-<body>
-  <section class="container">
-    <div class="header-info">
-      <h2>Shopify Peek 👀</h2>
-      <p>A simple browser snapshot of Shopify theme information!</p>
+<body class="bg-slate-900 text-slate-50">
+  <section class="container py-4 px-8 min-w-[550px] flex flex-col">
+    <div class="header-info mb-4">
+      <h2 class="font-mono text-slate-200 font-semibold text-2xl">Shopify Peek</h2>
+      <p class="text-xs">A simple browser snapshot of Shopify theme information!</p>
     </div>
-    <div class="not-a-shop">
+    <div class="w-full mb-4 h-[1px] bg-slate-400"></div>
+    <div class="not-a-shop hidden">
       <h3>Uh oh... Looks like this isn't a Shopify store!</h3>
     </div>
-    <div class="shop-info hidden">
+    <div class="shop-info mb-4">
       <ul>
-        <li>
-          <h4>Theme Url:</h4>
-          <p data-theme-url></p>
+        <li class="mb-3">
+          <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit">
+            <span class="text-blue-200 lowercase">Theme Url:</span>
+          </h4>
+          <p class="text-base pl-1" data-theme-url>asdfasd</p>
         </li>
-        <li>
-          <h4>Theme Name:</h4>
-          <p data-theme-name></p>
+        <li class="mb-3">
+          <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit">
+            <span class="text-blue-200 lowercase">Theme Name:</span>
+          </h4>
+          <p class="text-base pl-1" data-theme-name>asdfs</p>
         </li>
-        <li>
-          <h4>Theme Id:</h4>
-          <p data-theme-id></p>
+        <li class="mb-3">
+          <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit">
+            <span class="text-blue-200 lowercase">Theme Id:</span>
+          </h4>
+          <p class="text-base pl-1" data-theme-id></p>
         </li>
-        <li>
-          <h4>Store Currency:</h4>
-          <p data-store-currency></p>
+        <li class="mb-3">
+          <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit">
+            <span class="text-blue-200 lowercase">Store Currency:</span>
+          </h4>
+          <p class="text-base pl-1" data-store-currency></p>
         </li>
       </ul>
     </div>
-    <div class="product-cart-info hidden"></div>
-    <div class="shop-buttons">
-      <button disabled="true" class="disabled" data-product-info-btn>See Product Info</button>
-      <button disabled="true" class="disabled" data-cart-info-btn>See Cart Info</button>
-      <button class="hidden" data-back-btn>Go Back</button>
+    <div class="product-cart-info hidden mb-4"></div>
+    <div class="shop-buttons flex flex-col gap-4 mb-6">
+      <button disabled="true" class="!cursor-not-allowed py-1 px-2 border border-slate-200 rounded-md w-fit cursor-pointer transition-all hover:bg-slate-400 text-sm" data-product-info-btn>See Product Info</button>
+      <button disabled="true" class="!cursor-not-allowed py-1 px-2 border border-slate-200 rounded-md w-fit cursor-pointer transition-all hover:bg-slate-400 text-sm" data-cart-info-btn>See Cart Info</button>
+      <button class="hidden py-1 px-2 border border-slate-200 rounded-md w-fit cursor-pointer transition-all hover:bg-slate-400 text-sm" data-back-btn>Go Back</button>
     </div>
+    <div class="rounded-md bg-teal-900 p-4 mb-6">
+      <h5 class="font-mono text-xs lowercase font-semibold mb-2">Helpful Links</h5>
+      <ul>
+        <li>
+          <a class="text-s text-blue-200" target="_blank" href="https://shopify.dev/docs">🌐 Shopify Dev Docs</a>
+        </li>
+        <li>
+          <a class="text-s text-blue-200" target="_blank" href="https://shopify.dev/docs/apps">🖥️ Shopify App Docs</a>
+        </li>
+        <li>
+          <a class="text-s text-blue-200" target="_blank" href="https://shopify.dev/docs/custom-storefronts">🏬 Shopify Storefront Docs</a>
+        </li>
+        <li>
+          <a class="text-s text-blue-200" target="_blank" href="https://shopify.dev/docs/marketplaces">🏪 Shopify Marketplace Docs</a>
+        </li>
+        <li>
+          <a class="text-s text-blue-200" target="_blank" href="https://www.shopify.com/partners/shopify-cheat-sheet">📝 Shopify Cheat Sheet</a>
+        </li>
+      </ul>
+    </div>
+    <p class="text-[10px] text-slate-200 text-center tracking-widest">©2023 Cory Kelley</p>
   </section>
   <script src="background.js"></script>
 </body>
