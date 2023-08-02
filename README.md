@@ -24,7 +24,7 @@ If on a product page, Shopify Peek will allow a user to reveal product informati
 - Variants (with appropriate variant information)
 - Images (with id and alt information)
 ### Cart Page
-If on a cart page, Shopify Peek will allow a user to reveal product information by clicking the `See Cart Info` button (button will be disabled if not). Cart data exposed includes:
+If on a cart page, Shopify Peek will allow a user to reveal cart information by clicking the `See Cart Info` button (button will be disabled if not). Cart data exposed includes:
 - Total Cart Price
 - Item Count
 - Items (list of items with appropriate item information)
