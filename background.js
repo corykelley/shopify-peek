@@ -1,53 +1,53 @@
-const themeUrl = document.querySelector('[data-theme-url]');
-const themeName = document.querySelector('[data-theme-name]');
-const themeId = document.querySelector('[data-theme-id]');
-const storeCurrency = document.querySelector('[data-store-currency]');
-const notAStoreContainer = document.querySelector('.not-a-shop');
-const storeContentContainer = document.querySelector('.shop-info');
-const productCartInfoContainer = document.querySelector('.product-cart-info');
-const productInfoBtn = document.querySelector('[data-product-info-btn]');
-const cartInfoBtn = document.querySelector('[data-cart-info-btn]');
-const backBtn = document.querySelector('[data-back-btn]');
+const themeUrl = document.querySelector("[data-theme-url]");
+const themeName = document.querySelector("[data-theme-name]");
+const themeId = document.querySelector("[data-theme-id]");
+const storeCurrency = document.querySelector("[data-store-currency]");
+const notAStoreContainer = document.querySelector(".not-a-shop");
+const storeContentContainer = document.querySelector(".shop-info");
+const productCartInfoContainer = document.querySelector(".product-cart-info");
+const productInfoBtn = document.querySelector("[data-product-info-btn]");
+const cartInfoBtn = document.querySelector("[data-cart-info-btn]");
+const backBtn = document.querySelector("[data-back-btn]");
 
 const convertPrice = (price) => {
-	let converted = (price / 100).toFixed(2) * 1;
-	return `$${converted}`;
+  let converted = (price / 100).toFixed(2) * 1;
+  return `$${converted}`;
 };
 
 const toggleBtnState = (type) => {
-	if (type == 'product') {
-		productInfoBtn.disabled = false;
-		productInfoBtn.classList.remove('!cursor-not-allowed');
-	} else if (type == 'cart') {
-		cartInfoBtn.disabled = false;
-		cartInfoBtn.classList.remove('!cursor-not-allowed');
-	}
+  if (type == "product") {
+    productInfoBtn.disabled = false;
+    productInfoBtn.classList.remove("!cursor-not-allowed");
+  } else if (type == "cart") {
+    cartInfoBtn.disabled = false;
+    cartInfoBtn.classList.remove("!cursor-not-allowed");
+  }
 };
 
 const showHideBtns = (index = true) => {
-	if (index) {
-		productInfoBtn.classList.remove('hidden');
-		cartInfoBtn.classList.remove('hidden');
-		backBtn.classList.add('hidden');
-	} else {
-		productInfoBtn.classList.add('hidden');
-		cartInfoBtn.classList.add('hidden');
-		backBtn.classList.remove('hidden');
-	}
+  if (index) {
+    productInfoBtn.classList.remove("hidden");
+    cartInfoBtn.classList.remove("hidden");
+    backBtn.classList.add("hidden");
+  } else {
+    productInfoBtn.classList.add("hidden");
+    cartInfoBtn.classList.add("hidden");
+    backBtn.classList.remove("hidden");
+  }
 };
 
 const handleInfoButtons = (type, info, origin) => {
-	let html = ``;
+  let html = ``;
 
-	if (type == 'product') {
-		productInfoBtn.addEventListener('click', () => {
-			showHideBtns(false);
-			let variantHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Variants:</span></h4><ul>`;
-			let imageHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Images:</span></h4><ul>`;
+  if (type == "product") {
+    productInfoBtn.addEventListener("click", () => {
+      showHideBtns(false);
+      let variantHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Variants:</span></h4><ul>`;
+      let imageHtml = `<li><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Images:</span></h4><ul>`;
 
-			if (info.product.variants.length) {
-				info.product.variants.forEach((variant) => {
-					variantHtml += `
+      if (info.product.variants.length) {
+        info.product.variants.forEach((variant) => {
+          variantHtml += `
             <li class="mb-3 pl-1">
             <ul>
               <li class="text-s pl-1 tracking-wide">
@@ -56,25 +56,25 @@ const handleInfoButtons = (type, info, origin) => {
                 <span class="mr-1 lowercase">Id: </span>${variant.id}</li>
               <li class="text-s pl-1 tracking-wide">
                 <span class="mr-1 lowercase">Price: </span>$${
-									variant.price
-								}</li>
+                  variant.price
+                }</li>
               <li class="text-s pl-1 tracking-wide">
                 <span class="mr-1 lowercase">Compare At Price: </span>$${
-									variant.compare_at_price ? variant.compare_at_price : 0
-								}</li>
+                  variant.compare_at_price ? variant.compare_at_price : 0
+                }</li>
               <li class="text-s pl-1 tracking-wide">
                 <span class="mr-1 lowercase">sku: </span>${variant.sku}</li>
             </ul>
             </li>
           `;
-				});
+        });
 
-				variantHtml += `</ul></li>`;
-			}
+        variantHtml += `</ul></li>`;
+      }
 
-			if (info.product.images.length) {
-				info.product.images.forEach((image) => {
-					imageHtml += `
+      if (info.product.images.length) {
+        info.product.images.forEach((image) => {
+          imageHtml += `
             <li class="mb-3 pl-1">
             <ul>
               <li class="text-s pl-1 tracking-wide">
@@ -87,12 +87,12 @@ const handleInfoButtons = (type, info, origin) => {
             </ul>
             </li>
           `;
-				});
+        });
 
-				imageHtml += `</ul></li>`;
-			}
+        imageHtml += `</ul></li>`;
+      }
 
-			html += `
+      html += `
         <ul>
           <li class="mb-3">
             <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Title:</span></h4>
@@ -111,19 +111,19 @@ const handleInfoButtons = (type, info, origin) => {
         </ul>
         `;
 
-			productCartInfoContainer.innerHTML = html;
-			storeContentContainer.classList.add('hidden');
-			productCartInfoContainer.classList.remove('hidden');
-		});
-	} else {
-		cartInfoBtn.addEventListener('click', () => {
-			showHideBtns(false);
-			let itemsHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Items:</span></h4><ul>`;
-			let attHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Attributes:</span></h4><ul>`;
+      productCartInfoContainer.innerHTML = html;
+      storeContentContainer.classList.add("hidden");
+      productCartInfoContainer.classList.remove("hidden");
+    });
+  } else {
+    cartInfoBtn.addEventListener("click", () => {
+      showHideBtns(false);
+      let itemsHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Items:</span></h4><ul>`;
+      let attHtml = `<li class="mb-3"><h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Attributes:</span></h4><ul>`;
 
-			if (info.items.length) {
-				info.items.forEach((item) => {
-					itemsHtml += `
+      if (info.items.length) {
+        info.items.forEach((item) => {
+          itemsHtml += `
             <li class="mb-3 pl-1">
               <ul>
                 <li class="text-s pl-1 tracking-wide">
@@ -132,38 +132,38 @@ const handleInfoButtons = (type, info, origin) => {
                   <span class="mr-1 lowercase">Id: </span>${item.id}</li>
                 <li class="text-s pl-1 tracking-wide">
                   <span class="mr-1 lowercase">Price: </span>${convertPrice(
-										item.price
-									)}</li>
+                    item.price
+                  )}</li>
                 <li class="text-s pl-1 tracking-wide">
                   <span class="mr-1 lowercase">Quantity: </span>${
-										item.quantity
-									}</li>
+                    item.quantity
+                  }</li>
                 <li class="text-s pl-1 tracking-wide">
                   <span class="mr-1 lowercase">SKU: </span>${item.sku}</li>
                 <li class="text-s pl-1 tracking-wide">
                   <span class="mr-1 lowercase">URL: </span><a href=${
-										origin + item.url
-									} target="_blank">${origin + item.url}</a></li>
+                    origin + item.url
+                  } target="_blank">${origin + item.url}</a></li>
               </ul>
             </li>
           `;
-				});
-				itemsHtml += `</ul></li>`;
-			}
+        });
+        itemsHtml += `</ul></li>`;
+      }
 
-			if (info.attributes) {
-				for (const prop in info.attributes) {
-					attHtml += `
+      if (info.attributes) {
+        for (const prop in info.attributes) {
+          attHtml += `
             <li class="mb-3">
               <p class="text-s pl-1">${prop}: ${info.attributes[prop]}</p>
             </li>
           `;
-				}
+        }
 
-				attHtml += `</ul></li>`;
-			}
+        attHtml += `</ul></li>`;
+      }
 
-			html += `
+      html += `
         <ul>
           <li class="mb-3">
             <h4 class="font-mono font-light text-xs bg-slate-800 p-1 w-fit"><span class="text-blue-200 lowercase">Total Price:</span></h4>
@@ -178,63 +178,56 @@ const handleInfoButtons = (type, info, origin) => {
         </ul>
         `;
 
-			productCartInfoContainer.innerHTML = html;
-			storeContentContainer.classList.add('hidden');
-			productCartInfoContainer.classList.remove('hidden');
-		});
-	}
+      productCartInfoContainer.innerHTML = html;
+      storeContentContainer.classList.add("hidden");
+      productCartInfoContainer.classList.remove("hidden");
+    });
+  }
 };
 
 async function getCurrentTab(id) {
-	let queryOptions = { active: true, lastFocusedWindow: true };
-	let [tab] = await chrome.tabs.query(queryOptions);
-	let msg = { txt: 'hello' };
-	let tabId = id ? parseInt(id) : tab.id;
-	localStorage.setItem('tabId', tabId);
+  const queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  const msg = { txt: "hello" };
+  const tabId = id ? parseInt(id) : tab.id;
+  localStorage.setItem("tabId", tabId);
 
-	chrome.tabs.sendMessage(tabId, msg, (response) => {
-		if (response.store) {
-			const urlPathname = response.pathname;
-			const url = `https://${response.shopUrl}${
-				urlPathname ? urlPathname : ''
-			}?preview_theme_id=${response.themeInfo.id}`;
+  chrome.tabs.sendMessage(tabId, msg, (response) => {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError.message);
+      return;
+    }
 
-			themeUrl.innerHTML = url;
-			themeName.innerHTML = response.themeInfo.name;
-			themeId.innerHTML = response.themeInfo.id;
-			storeCurrency.innerHTML = response.storeCurrency.active;
+    if (response && response.store) {
+      const urlPathname = response.pathname;
+      const url = `https://${response.shopUrl}${
+        urlPathname ? urlPathname : ""
+      }?preview_theme_id=${response.themeInfo.id}`;
 
-			switch (response.type) {
-				case 'product':
-					if (response.info) {
-						showHideBtns(true);
-						toggleBtnState(response.type);
-						handleInfoButtons(response.type, response.info, response.origin);
-						backBtn.addEventListener('click', () => {
-							getCurrentTab(localStorage.tabId);
-							productCartInfoContainer.classList.add('hidden');
-							storeContentContainer.classList.remove('hidden');
-						});
-					}
-					break;
-				case 'cart':
-					if (response.info) {
-						showHideBtns(true);
-						toggleBtnState(response.type);
-						handleInfoButtons(response.type, response.info, response.origin);
-						backBtn.addEventListener('click', () => {
-							getCurrentTab(localStorage.tabId);
-							productCartInfoContainer.classList.add('hidden');
-							storeContentContainer.classList.remove('hidden');
-						});
-					}
-					break;
-			}
+      themeUrl.innerHTML = url;
+      themeName.innerHTML = response.themeInfo.name;
+      themeId.innerHTML = response.themeInfo.id;
+      storeCurrency.innerHTML = response.storeCurrency.active;
 
-			storeContentContainer.classList.remove('hidden');
-			notAStoreContainer.classList.add('hidden');
-		}
-	});
+      if (response.type === "product" || response.type === "cart") {
+        if (response.info) {
+          showHideBtns(true);
+          toggleBtnState(response.type);
+          handleInfoButtons(response.type, response.info, response.origin);
+          backBtn.addEventListener("click", () => {
+            getCurrentTab(localStorage.tabId);
+            productCartInfoContainer.classList.add("hidden");
+            storeContentContainer.classList.remove("hidden");
+          });
+        }
+      } else {
+        console.error(`Unexpected response type: ${response.type}`);
+      }
+
+      storeContentContainer.classList.remove("hidden");
+      notAStoreContainer.classList.add("hidden");
+    }
+  });
 }
 
 getCurrentTab();
