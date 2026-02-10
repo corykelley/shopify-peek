@@ -13,7 +13,7 @@
   <!-- Scanline overlay -->
   <div class="scanlines pointer-events-none fixed inset-0 z-50" aria-hidden="true"></div>
 
-  <section class="relative container py-5 px-6 min-w-[520px] max-w-[580px] flex flex-col" role="main">
+  <section class="relative container py-6 px-7 min-w-[520px] max-w-[580px] flex flex-col" role="main">
 
     <!-- Header -->
     <header class="mb-5 flex items-center gap-3">
@@ -57,7 +57,7 @@
       <!-- Detection source badge (shown only for headless) -->
       <p class="text-[11px] text-neon-magenta tracking-wider uppercase mb-3 hidden" data-detection-source></p>
 
-      <ul class="space-y-3">
+      <ul class="space-y-4">
         <li>
           <h4 class="label">Theme URL</h4>
           <div class="flex items-start gap-2">
@@ -74,8 +74,28 @@
           <p class="value" data-theme-id></p>
         </li>
         <li>
+          <h4 class="label">Theme Role</h4>
+          <p class="value" data-theme-role></p>
+        </li>
+        <li>
+          <h4 class="label">Theme Store ID</h4>
+          <p class="value" data-theme-store-id></p>
+        </li>
+        <li>
           <h4 class="label">Store Currency</h4>
           <p class="value" data-store-currency></p>
+        </li>
+        <li>
+          <h4 class="label">Country</h4>
+          <p class="value" data-store-country></p>
+        </li>
+        <li class="hidden" data-root-path-row>
+          <h4 class="label">Root Path</h4>
+          <p class="value" data-root-path></p>
+        </li>
+        <li class="hidden" data-design-mode-row>
+          <h4 class="label">Design Mode</h4>
+          <p class="value text-neon-magenta" data-design-mode></p>
         </li>
       </ul>
 

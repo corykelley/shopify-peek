@@ -64,16 +64,62 @@ async function detectViaShopifyObject(tabId) {
         return {
           shop: Shopify.shop || null,
           theme: Shopify.theme
-            ? { id: Shopify.theme.id, name: Shopify.theme.name, role: Shopify.theme.role }
+            ? {
+                id: Shopify.theme.id,
+                name: Shopify.theme.name,
+                role: Shopify.theme.role,
+                theme_store_id: Shopify.theme.theme_store_id ?? null,
+              }
             : null,
           currency: Shopify.currency || null,
           locale: Shopify.locale || null,
+          country: Shopify.country || null,
+          routes_root: Shopify.routes?.root || null,
+          designMode: Shopify.designMode || false,
         };
       },
     });
 
     if (result && result.result) {
       return { detected: true, source: 'shopify_object', data: result.result };
+    }
+  } catch {
+    /* scripting can fail on restricted pages – fall through */
+  }
+  return { detected: false };
+}
+
+// ---------------------------------------------------------------------------
+// Secondary detection – scan DOM for cdn.shopify.com references
+// ---------------------------------------------------------------------------
+
+async function detectViaCdnPresence(tabId) {
+  try {
+    const [result] = await chrome.scripting.executeScript({
+      target: { tabId },
+      world: 'MAIN',
+      func: () => {
+        const selectors = 'script[src], link[href], img[src]';
+        const elements = document.querySelectorAll(selectors);
+        for (const el of elements) {
+          const val = el.src || el.href || '';
+          if (val.includes('cdn.shopify.com')) return true;
+        }
+        return false;
+      },
+    });
+
+    if (result && result.result) {
+      return {
+        detected: true,
+        source: 'cdn_scan',
+        data: {
+          shop: null,
+          theme: null,
+          currency: null,
+          locale: null,
+        },
+      };
     }
   } catch {
     /* scripting can fail on restricted pages – fall through */
@@ -130,7 +176,12 @@ async function detectShopify(tabId, url) {
   // 1) Try reading window.Shopify (fastest, most data)
   let result = await detectViaShopifyObject(tabId);
 
-  // 2) Fallback: /meta.json
+  // 2) DOM scan for cdn.shopify.com references
+  if (!result.detected) {
+    result = await detectViaCdnPresence(tabId);
+  }
+
+  // 3) Fallback: /meta.json
   if (!result.detected) {
     result = await detectViaMetaJson(url);
   }

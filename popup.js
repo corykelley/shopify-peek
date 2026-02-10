@@ -19,7 +19,14 @@ const els = {
   themeUrl: $('[data-theme-url]'),
   themeName: $('[data-theme-name]'),
   themeId: $('[data-theme-id]'),
+  themeRole: $('[data-theme-role]'),
+  themeStoreId: $('[data-theme-store-id]'),
   storeCurrency: $('[data-store-currency]'),
+  storeCountry: $('[data-store-country]'),
+  rootPathRow: $('[data-root-path-row]'),
+  rootPath: $('[data-root-path]'),
+  designModeRow: $('[data-design-mode-row]'),
+  designMode: $('[data-design-mode]'),
   detectionSource: $('[data-detection-source]'),
   productInfoBtn: $('[data-product-info-btn]'),
   cartInfoBtn: $('[data-cart-info-btn]'),
@@ -82,16 +89,37 @@ function renderThemeInfo(shopData, tabUrl) {
   setTextContent(els.themeUrl, previewUrl);
   setTextContent(els.themeName, shopData.theme?.name ?? 'N/A (headless)');
   setTextContent(els.themeId, themeId ?? 'N/A');
+  setTextContent(els.themeRole, shopData.theme?.role ?? 'N/A');
+
+  const tsId = shopData.theme?.theme_store_id;
+  setTextContent(els.themeStoreId, tsId != null ? String(tsId) : 'Custom');
+
   setTextContent(
     els.storeCurrency,
     shopData.currency?.active ?? shopData.currency ?? 'N/A'
   );
+  setTextContent(els.storeCountry, shopData.country ?? 'N/A');
+
+  // Root path – only show if non-default
+  if (shopData.routes_root && shopData.routes_root !== '/') {
+    setTextContent(els.rootPath, shopData.routes_root);
+    show(els.rootPathRow);
+  }
+
+  // Design mode – only show if active
+  if (shopData.designMode) {
+    setTextContent(els.designMode, 'Active');
+    show(els.designModeRow);
+  }
 
   // Detection source badge
   if (els.detectionSource) {
     const src = shopData._source;
     if (src === 'meta_json') {
       setTextContent(els.detectionSource, 'Detected via /meta.json (headless)');
+      show(els.detectionSource);
+    } else if (src === 'cdn_scan') {
+      setTextContent(els.detectionSource, 'Detected via CDN scan (minimal data)');
       show(els.detectionSource);
     } else {
       hide(els.detectionSource);
