@@ -54,50 +54,70 @@
     <!-- Store info -->
     <div class="shop-info mb-4 hidden" aria-live="polite">
 
-      <!-- Detection source badge (shown only for headless) -->
-      <p class="text-[11px] text-neon-magenta tracking-wider uppercase mb-3 hidden" data-detection-source></p>
+      <!-- Headless / minimal-data card (hidden by default) -->
+      <div class="headless-info hidden" aria-live="polite">
+        <div class="rounded-lg border border-neon-magenta/30 bg-retro-dark p-6 text-center mb-4">
+          <div class="text-3xl mb-2" aria-hidden="true">&gt;_</div>
+          <h3 class="text-sm font-bold tracking-wide text-neon-magenta uppercase">
+            Headless or Dark Arts Detected
+          </h3>
+          <p class="text-xs text-retro-gray/90 mt-2 leading-relaxed max-w-[380px] mx-auto">
+            This store is running headless &mdash; no <code class="text-neon-cyan/80">window.Shopify</code>
+            object in sight. We found Shopify CDN fingerprints in the DOM, but theme
+            data is hiding behind a custom frontend.
+          </p>
+          <p class="text-[11px] text-neon-magenta/70 tracking-wider uppercase mt-3" data-headless-method></p>
+        </div>
+        <ul class="space-y-4" data-headless-fields></ul>
+      </div>
 
-      <ul class="space-y-4">
-        <li>
-          <h4 class="label">Theme URL</h4>
-          <div class="flex items-start gap-2">
-            <p class="value flex-1 break-all" data-theme-url></p>
-            <button class="btn-sm flex-shrink-0" data-copy-url-btn aria-label="Copy theme URL to clipboard">Copy URL</button>
-          </div>
-        </li>
-        <li>
-          <h4 class="label">Theme Name</h4>
-          <p class="value" data-theme-name></p>
-        </li>
-        <li>
-          <h4 class="label">Theme ID</h4>
-          <p class="value" data-theme-id></p>
-        </li>
-        <li>
-          <h4 class="label">Theme Role</h4>
-          <p class="value" data-theme-role></p>
-        </li>
-        <li>
-          <h4 class="label">Theme Store ID</h4>
-          <p class="value" data-theme-store-id></p>
-        </li>
-        <li>
-          <h4 class="label">Store Currency</h4>
-          <p class="value" data-store-currency></p>
-        </li>
-        <li>
-          <h4 class="label">Country</h4>
-          <p class="value" data-store-country></p>
-        </li>
-        <li class="hidden" data-root-path-row>
-          <h4 class="label">Root Path</h4>
-          <p class="value" data-root-path></p>
-        </li>
-        <li class="hidden" data-design-mode-row>
-          <h4 class="label">Design Mode</h4>
-          <p class="value text-neon-magenta" data-design-mode></p>
-        </li>
-      </ul>
+      <!-- Standard theme fields -->
+      <div class="theme-fields">
+        <!-- Detection source badge (shown only for headless) -->
+        <p class="text-[11px] text-neon-magenta tracking-wider uppercase mb-3 hidden" data-detection-source></p>
+
+        <ul class="space-y-4">
+          <li>
+            <h4 class="label">Theme URL</h4>
+            <div class="flex items-start gap-2">
+              <p class="value flex-1 break-all" data-theme-url></p>
+              <button class="btn-sm flex-shrink-0" data-copy-url-btn aria-label="Copy theme URL to clipboard">Copy URL</button>
+            </div>
+          </li>
+          <li>
+            <h4 class="label">Theme Name</h4>
+            <p class="value" data-theme-name></p>
+          </li>
+          <li>
+            <h4 class="label">Theme ID</h4>
+            <p class="value" data-theme-id></p>
+          </li>
+          <li>
+            <h4 class="label">Theme Role</h4>
+            <p class="value" data-theme-role></p>
+          </li>
+          <li>
+            <h4 class="label">Theme Store ID</h4>
+            <p class="value" data-theme-store-id></p>
+          </li>
+          <li>
+            <h4 class="label">Store Currency</h4>
+            <p class="value" data-store-currency></p>
+          </li>
+          <li>
+            <h4 class="label">Country</h4>
+            <p class="value" data-store-country></p>
+          </li>
+          <li class="hidden" data-root-path-row>
+            <h4 class="label">Root Path</h4>
+            <p class="value" data-root-path></p>
+          </li>
+          <li class="hidden" data-design-mode-row>
+            <h4 class="label">Design Mode</h4>
+            <p class="value text-neon-magenta" data-design-mode></p>
+          </li>
+        </ul>
+      </div>
 
       <!-- Divider -->
       <div class="h-px bg-gradient-to-r from-transparent via-neon-magenta/30 to-transparent my-4" aria-hidden="true"></div>

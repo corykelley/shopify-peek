@@ -16,6 +16,10 @@ const els = {
   notAStore: $('.not-a-shop'),
   storeContent: $('.shop-info'),
   productCartInfo: $('.product-cart-info'),
+  themeFields: $('.theme-fields'),
+  headlessInfo: $('.headless-info'),
+  headlessMethod: $('[data-headless-method]'),
+  headlessFields: $('[data-headless-fields]'),
   themeUrl: $('[data-theme-url]'),
   themeName: $('[data-theme-name]'),
   themeId: $('[data-theme-id]'),
@@ -79,6 +83,18 @@ function getPageType(pathname) {
 // ---------------------------------------------------------------------------
 
 function renderThemeInfo(shopData, tabUrl) {
+  const src = shopData._source;
+  const isHeadless = src === 'cdn_scan' || src === 'meta_json';
+
+  if (isHeadless) {
+    renderHeadlessInfo(shopData, src);
+    return;
+  }
+
+  // Standard Shopify object — show full theme fields
+  hide(els.headlessInfo);
+  show(els.themeFields);
+
   const url = new URL(tabUrl);
   const pathname = url.pathname;
   const themeId = shopData.theme?.id;
@@ -87,7 +103,7 @@ function renderThemeInfo(shopData, tabUrl) {
     : `https://${shopData.shop}${pathname}`;
 
   setTextContent(els.themeUrl, previewUrl);
-  setTextContent(els.themeName, shopData.theme?.name ?? 'N/A (headless)');
+  setTextContent(els.themeName, shopData.theme?.name ?? 'N/A');
   setTextContent(els.themeId, themeId ?? 'N/A');
   setTextContent(els.themeRole, shopData.theme?.role ?? 'N/A');
 
@@ -112,20 +128,6 @@ function renderThemeInfo(shopData, tabUrl) {
     show(els.designModeRow);
   }
 
-  // Detection source badge
-  if (els.detectionSource) {
-    const src = shopData._source;
-    if (src === 'meta_json') {
-      setTextContent(els.detectionSource, 'Detected via /meta.json (headless)');
-      show(els.detectionSource);
-    } else if (src === 'cdn_scan') {
-      setTextContent(els.detectionSource, 'Detected via CDN scan (minimal data)');
-      show(els.detectionSource);
-    } else {
-      hide(els.detectionSource);
-    }
-  }
-
   // Copy URL button
   if (els.copyUrlBtn) {
     els.copyUrlBtn.addEventListener('click', () => {
@@ -134,6 +136,38 @@ function renderThemeInfo(shopData, tabUrl) {
         setTimeout(() => (els.copyUrlBtn.textContent = 'Copy URL'), 1500);
       });
     });
+  }
+}
+
+function renderHeadlessInfo(shopData, source) {
+  hide(els.themeFields);
+  show(els.headlessInfo);
+
+  // Method label
+  if (els.headlessMethod) {
+    const label = source === 'cdn_scan'
+      ? 'Detected via CDN fingerprint'
+      : 'Detected via /meta.json';
+    setTextContent(els.headlessMethod, label);
+  }
+
+  // Build whatever fields we do have
+  if (els.headlessFields) {
+    let html = '';
+    if (shopData.shop) {
+      html += field('Store Domain', shopData.shop);
+    }
+    if (shopData.meta?.myshopify_domain) {
+      html += field('Myshopify Domain', shopData.meta.myshopify_domain);
+    }
+    if (shopData.currency) {
+      const c = shopData.currency?.active ?? shopData.currency;
+      html += field('Currency', c);
+    }
+    if (shopData.locale) {
+      html += field('Locale', shopData.locale);
+    }
+    els.headlessFields.innerHTML = html;
   }
 }
 
