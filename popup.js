@@ -24,6 +24,7 @@ const els = {
   backBtn: $('[data-back-btn]'),
   copyUrlBtn: $('[data-copy-url-btn]'),
   loadingIndicator: $('.loading-indicator'),
+  statusDot: $('.status-dot'),
 };
 
 // ---------------------------------------------------------------------------
@@ -44,6 +45,17 @@ function hide(el) {
 
 function setTextContent(el, text) {
   if (el) el.textContent = text ?? '';
+}
+
+function setStatusDot(isShopify) {
+  if (!els.statusDot) return;
+  if (isShopify) {
+    els.statusDot.classList.remove('bg-neon-red', 'animate-red-pulse');
+    els.statusDot.classList.add('bg-neon-cyan', 'animate-glow-pulse');
+  } else {
+    els.statusDot.classList.remove('bg-neon-cyan', 'animate-glow-pulse');
+    els.statusDot.classList.add('bg-neon-red', 'animate-red-pulse');
+  }
 }
 
 function getPageType(pathname) {
@@ -255,6 +267,7 @@ async function init() {
   const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
   if (!tab) {
     hide(els.loadingIndicator);
+    setStatusDot(false);
     show(els.notAStore);
     return;
   }
@@ -263,11 +276,13 @@ async function init() {
   hide(els.loadingIndicator);
 
   if (!resp?.isShopify || !resp.shopData) {
+    setStatusDot(false);
     show(els.notAStore);
     return;
   }
 
   // Shopify detected — render
+  setStatusDot(true);
   renderThemeInfo(resp.shopData, resp.url);
   show(els.storeContent);
 

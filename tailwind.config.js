@@ -12,6 +12,7 @@ module.exports = {
         'retro-dark': 'rgb(var(--color-retro-dark) / <alpha-value>)',
         'retro-gray': 'rgb(var(--color-retro-gray) / <alpha-value>)',
         'retro-white': 'rgb(var(--color-retro-white) / <alpha-value>)',
+        'neon-red': 'rgb(var(--color-neon-red) / <alpha-value>)',
       },
       fontFamily: {
         mono: [
@@ -25,11 +26,16 @@ module.exports = {
       },
       animation: {
         'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+        'red-pulse': 'red-pulse 2s ease-in-out infinite alternate',
       },
       keyframes: {
         'glow-pulse': {
           '0%': { opacity: '0.6' },
           '100%': { opacity: '1' },
+        },
+        'red-pulse': {
+          '0%': { opacity: '0.35' },
+          '100%': { opacity: '0.9' },
         },
       },
     },
