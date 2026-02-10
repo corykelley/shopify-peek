@@ -8,12 +8,12 @@
   <title>Shopify Peek</title>
 </head>
 
-<body class="bg-white text-gray-900 font-mono antialiased">
+<body class="bg-retro-black text-retro-white font-mono antialiased">
 
   <!-- Scanline overlay -->
-  <div class="scanlines pointer-events-none fixed inset-0 z-50"></div>
+  <div class="scanlines pointer-events-none fixed inset-0 z-50" aria-hidden="true"></div>
 
-  <section class="relative container py-5 px-6 min-w-[520px] max-w-[580px] flex flex-col">
+  <section class="relative container py-5 px-6 min-w-[520px] max-w-[580px] flex flex-col" role="main">
 
     <!-- Header -->
     <header class="mb-5 flex items-center gap-3">
@@ -25,43 +25,44 @@
           Store &amp; theme inspector
         </p>
       </div>
-      <div class="status-dot h-2.5 w-2.5 rounded-full bg-neon-cyan animate-glow-pulse"></div>
+      <div class="status-dot h-2.5 w-2.5 rounded-full bg-neon-cyan animate-glow-pulse"
+           role="status" aria-label="Shopify store detected"></div>
     </header>
 
     <!-- Divider -->
-    <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/30 to-transparent mb-5"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/40 to-transparent mb-5" aria-hidden="true"></div>
 
     <!-- Loading -->
-    <div class="loading-indicator hidden text-center py-8">
-      <div class="inline-block w-5 h-5 border-2 border-neon-cyan/30 border-t-neon-cyan rounded-full animate-spin"></div>
+    <div class="loading-indicator hidden text-center py-8" role="status" aria-live="polite">
+      <div class="inline-block w-5 h-5 border-2 border-neon-cyan/30 border-t-neon-cyan rounded-full animate-spin" aria-hidden="true"></div>
       <p class="text-xs text-retro-gray mt-2 tracking-wide">SCANNING...</p>
     </div>
 
     <!-- Not a Shopify store -->
-    <div class="not-a-shop hidden">
-      <div class="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
-        <div class="text-3xl mb-3 opacity-40">:/</div>
+    <div class="not-a-shop hidden" role="status" aria-live="polite">
+      <div class="rounded-lg border border-retro-gray/20 bg-retro-dark p-6 text-center">
+        <div class="text-3xl mb-3 opacity-60" aria-hidden="true">:/</div>
         <h3 class="text-sm font-semibold tracking-wide text-retro-gray uppercase">
           Not a Shopify store
         </h3>
-        <p class="text-xs text-retro-gray/60 mt-1">
+        <p class="text-xs text-retro-gray/80 mt-1">
           This page wasn't detected as a Shopify-powered site.
         </p>
       </div>
     </div>
 
     <!-- Store info -->
-    <div class="shop-info mb-4 hidden">
+    <div class="shop-info mb-4 hidden" aria-live="polite">
 
       <!-- Detection source badge (shown only for headless) -->
-      <p class="text-[10px] text-neon-magenta tracking-wider uppercase mb-3 hidden" data-detection-source></p>
+      <p class="text-[11px] text-neon-magenta tracking-wider uppercase mb-3 hidden" data-detection-source></p>
 
       <ul class="space-y-3">
         <li>
           <h4 class="label">Theme URL</h4>
           <div class="flex items-start gap-2">
             <p class="value flex-1 break-all" data-theme-url></p>
-            <button class="btn-sm flex-shrink-0" data-copy-url-btn>Copy URL</button>
+            <button class="btn-sm flex-shrink-0" data-copy-url-btn aria-label="Copy theme URL to clipboard">Copy URL</button>
           </div>
         </li>
         <li>
@@ -79,66 +80,60 @@
       </ul>
 
       <!-- Divider -->
-      <div class="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent my-4"></div>
+      <div class="h-px bg-gradient-to-r from-transparent via-neon-magenta/30 to-transparent my-4" aria-hidden="true"></div>
 
       <!-- Action buttons -->
-      <div class="flex gap-3">
+      <div class="flex gap-3" role="group" aria-label="Data actions">
         <button disabled
           class="btn btn-disabled"
-          data-product-info-btn>
+          data-product-info-btn
+          aria-disabled="true">
           Product Info
         </button>
         <button disabled
           class="btn btn-disabled"
-          data-cart-info-btn>
+          data-cart-info-btn
+          aria-disabled="true">
           Cart Info
         </button>
-        <button class="btn hidden" data-back-btn>
+        <button class="btn hidden" data-back-btn aria-label="Go back to store info">
           &larr; Back
         </button>
       </div>
     </div>
 
     <!-- Product / Cart detail view -->
-    <div class="product-cart-info hidden mb-4"></div>
+    <div class="product-cart-info hidden mb-4" aria-live="polite"></div>
 
     <!-- Helpful Links -->
-    <div class="rounded-lg border border-gray-200 bg-gray-50/80 p-4 mb-5 mt-1">
-      <h5 class="text-[10px] font-bold text-neon-cyan/90 tracking-widest uppercase mb-2">
+    <nav class="rounded-lg border border-neon-cyan/10 bg-retro-dark p-4 mb-5 mt-1" aria-label="Helpful links">
+      <h5 class="text-[11px] font-bold text-neon-cyan/90 tracking-widest uppercase mb-2">
         Helpful Links
       </h5>
       <ul class="space-y-1">
         <li>
-          <a class="link" target="_blank" href="https://shopify.dev/docs">Shopify Dev Docs</a>
+          <a class="link" target="_blank" rel="noopener noreferrer" href="https://shopify.dev/docs">Shopify Dev Docs</a>
         </li>
         <li>
-          <a class="link" target="_blank" href="https://shopify.dev/docs/apps">App Development</a>
+          <a class="link" target="_blank" rel="noopener noreferrer" href="https://shopify.dev/docs/apps">App Development</a>
         </li>
         <li>
-          <a class="link" target="_blank" href="https://shopify.dev/docs/custom-storefronts">Storefront Docs</a>
+          <a class="link" target="_blank" rel="noopener noreferrer" href="https://shopify.dev/docs/custom-storefronts">Storefront Docs</a>
         </li>
         <li>
-          <a class="link" target="_blank" href="https://shopify.dev/docs/api">API Reference</a>
+          <a class="link" target="_blank" rel="noopener noreferrer" href="https://shopify.dev/docs/api">API Reference</a>
         </li>
         <li>
-          <a class="link" target="_blank" href="https://www.shopify.com/partners/shopify-cheat-sheet">Cheat Sheet</a>
+          <a class="link" target="_blank" rel="noopener noreferrer" href="https://www.shopify.com/partners/shopify-cheat-sheet">Cheat Sheet</a>
         </li>
       </ul>
-    </div>
+    </nav>
 
     <!-- Footer -->
-    <a class="block text-[11px] text-retro-gray/50 hover:text-neon-cyan text-center tracking-wide transition-colors"
-       target="_blank" href="https://github.com/corykelley/shopify-peek">
+    <a class="block text-[11px] text-retro-gray/80 hover:text-neon-cyan/90 text-center tracking-wide transition-colors"
+       target="_blank" rel="noopener noreferrer" href="https://github.com/corykelley/shopify-peek">
       github.com/corykelley/shopify-peek
     </a>
-
-    <!-- Animated blur blobs -->
-    <div class="blur-blob-wrap">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="blob blob-3"></div>
-    </div>
-
   </section>
 
   <script src="popup.js"></script>

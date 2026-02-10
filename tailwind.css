@@ -3,170 +3,143 @@
 @import 'tailwindcss/utilities';
 
 /* -----------------------------------------------------------------------
-   CSS custom properties – light-mode palette
+   CSS custom properties for retro color palette (required for alpha-value)
    ----------------------------------------------------------------------- */
 :root {
-  --color-neon-cyan: 0 184 163;
-  --color-neon-magenta: 220 38 127;
-  --color-neon-blue: 56 100 220;
-  --color-neon-yellow: 210 170 30;
+  --color-neon-cyan: 0 240 208;
+  --color-neon-magenta: 255 45 149;
+  --color-neon-blue: 77 124 255;
+  --color-neon-yellow: 255 225 86;
   --color-retro-black: 10 10 15;
-  --color-retro-dark: 243 244 246;
-  --color-retro-gray: 120 120 140;
-  --color-retro-white: 255 255 255;
-  --color-neon-red: 220 50 50;
+  --color-retro-dark: 18 18 26;
+  --color-retro-gray: 150 150 170;
+  --color-retro-white: 232 232 240;
+  --color-neon-red: 255 60 60;
 }
 
 /* -----------------------------------------------------------------------
-   Light-mode utilities for Shopify Peek
+   Retro 80s custom utilities for Shopify Peek
    ----------------------------------------------------------------------- */
 
-/* Subtle text accent (no harsh glow on light bg) */
+/* Neon text glow */
 .glow-text-cyan {
-  color: rgb(0 160 145);
+  text-shadow: 0 0 6px rgba(0, 240, 208, 0.5), 0 0 18px rgba(0, 240, 208, 0.2);
 }
 
 .glow-text-magenta {
-  color: rgb(200 30 110);
+  text-shadow: 0 0 6px rgba(255, 45, 149, 0.5), 0 0 18px rgba(255, 45, 149, 0.2);
 }
 
-/* Scanlines – disabled for light mode */
+/* CRT scanline overlay */
 .scanlines {
-  display: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  z-index: 999;
 }
 
-/* Label */
+/* Label (field name above value) */
 .label {
-  @apply text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5;
-  color: rgb(0 155 140);
+  @apply text-[11px] font-bold tracking-[0.15em] uppercase mb-0.5;
+  color: rgb(0 240 208 / 0.85);
 }
 
-/* Sub-label */
+/* Sub-label inside nested items */
 .sub-label {
-  @apply text-[10px] font-semibold tracking-wider uppercase;
-  color: rgb(120 120 140);
+  @apply text-[11px] font-semibold tracking-wider uppercase text-retro-gray;
 }
 
 /* Value text */
 .value {
   @apply text-sm leading-snug;
-  color: rgb(30 30 40);
+  color: rgb(232 232 240);
 }
 
 /* Buttons */
 .btn {
   @apply px-3 py-1.5 text-xs font-semibold tracking-wider uppercase
          rounded cursor-pointer transition-all duration-200;
-  color: rgb(0 155 140);
-  border: 1px solid rgb(0 170 155 / 0.35);
-  background-color: rgb(0 170 155 / 0.06);
+  color: rgb(0 240 208);
+  border: 1px solid rgb(0 240 208 / 0.4);
+  background-color: rgb(0 240 208 / 0.05);
 }
 .btn:hover {
-  background-color: rgb(0 170 155 / 0.12);
-  border-color: rgb(0 170 155 / 0.6);
-  box-shadow: 0 2px 12px rgba(0, 170, 155, 0.15);
+  background-color: rgb(0 240 208 / 0.15);
+  border-color: rgb(0 240 208 / 0.7);
+  box-shadow: 0 0 8px rgba(0, 240, 208, 0.4), 0 0 20px rgba(0, 240, 208, 0.15);
+}
+.btn:focus-visible {
+  outline: 2px solid rgb(0 240 208);
+  outline-offset: 2px;
 }
 
 .btn-disabled {
-  @apply opacity-30 cursor-not-allowed;
+  @apply opacity-40 cursor-not-allowed;
 }
 .btn-disabled:hover {
   background-color: transparent;
-  border-color: rgb(0 170 155 / 0.35);
+  border-color: rgb(0 240 208 / 0.4);
   box-shadow: none;
 }
 
 .btn-sm {
-  @apply px-2 py-1 text-[10px] font-semibold tracking-wider uppercase
+  @apply px-2 py-1 text-[11px] font-semibold tracking-wider uppercase
          rounded cursor-pointer transition-all duration-200;
-  color: rgb(200 30 110);
-  border: 1px solid rgb(200 30 110 / 0.3);
-  background-color: rgb(200 30 110 / 0.05);
+  color: rgb(255 45 149);
+  border: 1px solid rgb(255 45 149 / 0.4);
+  background-color: rgb(255 45 149 / 0.05);
 }
 .btn-sm:hover {
-  background-color: rgb(200 30 110 / 0.1);
-  border-color: rgb(200 30 110 / 0.5);
+  background-color: rgb(255 45 149 / 0.15);
+  border-color: rgb(255 45 149 / 0.7);
+}
+.btn-sm:focus-visible {
+  outline: 2px solid rgb(255 45 149);
+  outline-offset: 2px;
 }
 
 /* Links */
 .link {
   @apply text-xs transition-colors duration-150 tracking-wide;
-  color: rgb(0 155 140 / 0.8);
+  color: rgb(0 240 208 / 0.85);
 }
 .link:hover {
-  color: rgb(0 140 125);
+  color: rgb(0 240 208);
+}
+.link:focus-visible {
+  outline: 2px solid rgb(0 240 208);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 .link::before {
   content: '\2192\00a0';
-  color: rgb(0 155 140 / 0.35);
+  color: rgb(0 240 208 / 0.4);
 }
 
-/* Clean light body – no grid */
+/* Grid background on body */
 body {
-  background: #ffffff;
+  background-image:
+    linear-gradient(rgba(0, 240, 208, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 208, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-/* -----------------------------------------------------------------------
-   Animated gaussian blur blobs
-   ----------------------------------------------------------------------- */
-.blur-blob-wrap {
-  position: relative;
-  width: 100%;
-  height: 48px;
-  margin-top: 16px;
-  overflow: hidden;
-  border-radius: 0 0 8px 8px;
+/* Focus for generic interactive elements */
+a:focus-visible {
+  outline: 2px solid rgb(0 240 208);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-.blur-blob-wrap .blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(32px);
-  opacity: 0.55;
-  will-change: transform;
-}
-
-.blur-blob-wrap .blob-1 {
-  width: 120px;
-  height: 120px;
-  background: rgb(0 200 180);
-  top: -30px;
-  left: 10%;
-  animation: blob-drift-1 8s ease-in-out infinite alternate;
-}
-
-.blur-blob-wrap .blob-2 {
-  width: 100px;
-  height: 100px;
-  background: rgb(220 40 130);
-  top: -20px;
-  left: 45%;
-  animation: blob-drift-2 10s ease-in-out infinite alternate;
-}
-
-.blur-blob-wrap .blob-3 {
-  width: 110px;
-  height: 110px;
-  background: rgb(60 110 235);
-  top: -25px;
-  left: 75%;
-  animation: blob-drift-3 9s ease-in-out infinite alternate;
-}
-
-@keyframes blob-drift-1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(30px, 8px) scale(1.15); }
-  100% { transform: translate(-20px, -5px) scale(0.95); }
-}
-
-@keyframes blob-drift-2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-25px, 6px) scale(1.1); }
-  100% { transform: translate(20px, -8px) scale(1.05); }
-}
-
-@keyframes blob-drift-3 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(20px, 10px) scale(1.12); }
-  100% { transform: translate(-15px, -3px) scale(0.92); }
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
