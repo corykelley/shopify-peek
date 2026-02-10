@@ -8,7 +8,7 @@
   <title>Shopify Peek</title>
 </head>
 
-<body class="bg-retro-black text-retro-white font-mono antialiased">
+<body class="bg-white text-gray-900 font-mono antialiased">
 
   <!-- Scanline overlay -->
   <div class="scanlines pointer-events-none fixed inset-0 z-50"></div>
@@ -29,7 +29,7 @@
     </header>
 
     <!-- Divider -->
-    <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/40 to-transparent mb-5"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-neon-cyan/30 to-transparent mb-5"></div>
 
     <!-- Loading -->
     <div class="loading-indicator hidden text-center py-8">
@@ -39,7 +39,7 @@
 
     <!-- Not a Shopify store -->
     <div class="not-a-shop hidden">
-      <div class="rounded-lg border border-retro-gray/20 bg-retro-dark p-6 text-center">
+      <div class="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
         <div class="text-3xl mb-3 opacity-40">:/</div>
         <h3 class="text-sm font-semibold tracking-wide text-retro-gray uppercase">
           Not a Shopify store
@@ -79,7 +79,7 @@
       </ul>
 
       <!-- Divider -->
-      <div class="h-px bg-gradient-to-r from-transparent via-neon-magenta/30 to-transparent my-4"></div>
+      <div class="h-px bg-gradient-to-r from-transparent via-neon-magenta/20 to-transparent my-4"></div>
 
       <!-- Action buttons -->
       <div class="flex gap-3">
@@ -103,8 +103,8 @@
     <div class="product-cart-info hidden mb-4"></div>
 
     <!-- Helpful Links -->
-    <div class="rounded-lg border border-neon-cyan/10 bg-retro-dark p-4 mb-5 mt-1">
-      <h5 class="text-[10px] font-bold text-neon-cyan/80 tracking-widest uppercase mb-2">
+    <div class="rounded-lg border border-gray-200 bg-gray-50/80 p-4 mb-5 mt-1">
+      <h5 class="text-[10px] font-bold text-neon-cyan/90 tracking-widest uppercase mb-2">
         Helpful Links
       </h5>
       <ul class="space-y-1">
@@ -127,10 +127,18 @@
     </div>
 
     <!-- Footer -->
-    <a class="block text-[11px] text-retro-gray/60 hover:text-neon-cyan/80 text-center tracking-wide transition-colors"
+    <a class="block text-[11px] text-retro-gray/50 hover:text-neon-cyan text-center tracking-wide transition-colors"
        target="_blank" href="https://github.com/corykelley/shopify-peek">
       github.com/corykelley/shopify-peek
     </a>
+
+    <!-- Animated blur blobs -->
+    <div class="blur-blob-wrap">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
   </section>
 
   <script src="popup.js"></script>
