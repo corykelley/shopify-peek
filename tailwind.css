@@ -1,0 +1,115 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* -----------------------------------------------------------------------
+   CSS custom properties for retro color palette (required for alpha-value)
+   ----------------------------------------------------------------------- */
+:root {
+  --color-neon-cyan: 0 240 208;
+  --color-neon-magenta: 255 45 149;
+  --color-neon-blue: 77 124 255;
+  --color-neon-yellow: 255 225 86;
+  --color-retro-black: 10 10 15;
+  --color-retro-dark: 18 18 26;
+  --color-retro-gray: 107 107 128;
+  --color-retro-white: 232 232 240;
+}
+
+/* -----------------------------------------------------------------------
+   Retro 80s custom utilities for Shopify Peek
+   ----------------------------------------------------------------------- */
+
+/* Neon text glow */
+.glow-text-cyan {
+  text-shadow: 0 0 6px rgba(0, 240, 208, 0.5), 0 0 18px rgba(0, 240, 208, 0.2);
+}
+
+.glow-text-magenta {
+  text-shadow: 0 0 6px rgba(255, 45, 149, 0.5), 0 0 18px rgba(255, 45, 149, 0.2);
+}
+
+/* CRT scanline overlay */
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  z-index: 999;
+}
+
+/* Label (field name above value) */
+.label {
+  @apply text-[10px] font-bold tracking-[0.15em] uppercase mb-0.5;
+  color: rgb(0 240 208 / 0.7);
+}
+
+/* Sub-label inside nested items */
+.sub-label {
+  @apply text-[10px] font-semibold tracking-wider uppercase text-retro-gray;
+}
+
+/* Value text */
+.value {
+  @apply text-sm leading-snug;
+  color: rgb(232 232 240 / 0.9);
+}
+
+/* Buttons */
+.btn {
+  @apply px-3 py-1.5 text-xs font-semibold tracking-wider uppercase
+         rounded cursor-pointer transition-all duration-200;
+  color: rgb(0 240 208);
+  border: 1px solid rgb(0 240 208 / 0.4);
+  background-color: rgb(0 240 208 / 0.05);
+}
+.btn:hover {
+  background-color: rgb(0 240 208 / 0.15);
+  border-color: rgb(0 240 208 / 0.7);
+  box-shadow: 0 0 8px rgba(0, 240, 208, 0.4), 0 0 20px rgba(0, 240, 208, 0.15);
+}
+
+.btn-disabled {
+  @apply opacity-30 cursor-not-allowed;
+}
+.btn-disabled:hover {
+  background-color: transparent;
+  border-color: rgb(0 240 208 / 0.4);
+  box-shadow: none;
+}
+
+.btn-sm {
+  @apply px-2 py-1 text-[10px] font-semibold tracking-wider uppercase
+         rounded cursor-pointer transition-all duration-200;
+  color: rgb(255 45 149);
+  border: 1px solid rgb(255 45 149 / 0.4);
+  background-color: rgb(255 45 149 / 0.05);
+}
+.btn-sm:hover {
+  background-color: rgb(255 45 149 / 0.15);
+  border-color: rgb(255 45 149 / 0.7);
+}
+
+/* Links */
+.link {
+  @apply text-xs transition-colors duration-150 tracking-wide;
+  color: rgb(0 240 208 / 0.7);
+}
+.link:hover {
+  color: rgb(0 240 208);
+}
+.link::before {
+  content: '\2192\00a0';
+  color: rgb(0 240 208 / 0.3);
+}
+
+/* Grid background on body */
+body {
+  background-image:
+    linear-gradient(rgba(0, 240, 208, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 208, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

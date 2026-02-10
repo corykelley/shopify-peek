@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Shopify Peek",
+  "description": "Shopify store/theme information with the click of a button.",
+  "version": "2.0",
+  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Shopify Peek",
+    "default_icon": {
+      "16": "icons/icon-gray-16.png",
+      "32": "icons/icon-gray-32.png",
+      "48": "icons/icon-gray-48.png",
+      "128": "icons/icon-gray-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-neon-16.png",
+    "32": "icons/icon-neon-32.png",
+    "48": "icons/icon-neon-48.png",
+    "128": "icons/icon-neon-128.png"
+  }
+}
