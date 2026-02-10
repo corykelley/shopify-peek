@@ -182,7 +182,7 @@ chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   }
 
   if (msg.type === 'fetchJson') {
-    handleFetchJson(msg.url).then(sendResponse);
+    handleFetchJson(msg.url, msg.tabId).then(sendResponse);
     return true;
   }
 });
@@ -208,7 +208,28 @@ async function handleGetTabData(tabId) {
   };
 }
 
-async function handleFetchJson(url) {
+/**
+ * Fetch JSON from a URL. If tabId is provided, fetch runs in that tab's context
+ * so the request includes the user's cookies (required for /cart.json).
+ */
+async function handleFetchJson(url, tabId) {
+  if (tabId) {
+    try {
+      const [result] = await chrome.scripting.executeScript({
+        target: { tabId },
+        world: 'MAIN',
+        func: (fetchUrl) =>
+          fetch(fetchUrl, { credentials: 'include' })
+            .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))),
+        args: [url],
+      });
+      if (result?.result) return { data: result.result };
+      if (result?.error) return { error: result.error.message };
+    } catch (e) {
+      return { error: e?.message || String(e) };
+    }
+  }
+
   try {
     const resp = await fetch(url, { credentials: 'omit', signal: AbortSignal.timeout(5000) });
     if (!resp.ok) return { error: `HTTP ${resp.status}` };

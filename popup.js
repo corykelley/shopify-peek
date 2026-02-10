@@ -10,6 +10,8 @@
 // ---------------------------------------------------------------------------
 const $ = (sel) => document.querySelector(sel);
 
+let currentTabId = null;
+
 const els = {
   notAStore: $('.not-a-shop'),
   storeContent: $('.shop-info'),
@@ -233,7 +235,7 @@ function showBackButton() {
 
 async function loadProductInfo(tabUrl, origin) {
   const jsonUrl = tabUrl.split('?')[0] + '.json';
-  const resp = await chrome.runtime.sendMessage({ type: 'fetchJson', url: jsonUrl });
+  const resp = await chrome.runtime.sendMessage({ type: 'fetchJson', url: jsonUrl, tabId: currentTabId });
   if (resp?.data) {
     renderProductInfo(resp.data, origin);
     hide(els.storeContent);
@@ -245,7 +247,7 @@ async function loadProductInfo(tabUrl, origin) {
 async function loadCartInfo(tabUrl, origin) {
   const url = new URL(tabUrl);
   const jsonUrl = `${url.origin}/cart.json`;
-  const resp = await chrome.runtime.sendMessage({ type: 'fetchJson', url: jsonUrl });
+  const resp = await chrome.runtime.sendMessage({ type: 'fetchJson', url: jsonUrl, tabId: currentTabId });
   if (resp?.data) {
     renderCartInfo(resp.data, origin);
     hide(els.storeContent);
@@ -265,6 +267,7 @@ async function init() {
   hide(els.productCartInfo);
 
   const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+  currentTabId = tab?.id ?? null;
   if (!tab) {
     hide(els.loadingIndicator);
     setStatusDot(false);
