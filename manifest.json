@@ -3,7 +3,7 @@
   "name": "Shopify Peek",
   "description": "Shopify store/theme information with the click of a button.",
   "version": "2.0",
-  "permissions": ["scripting", "activeTab", "storage", "tabs"],
+  "permissions": ["scripting", "activeTab", "tabs"],
   "host_permissions": ["<all_urls>"],
   "background": {
     "service_worker": "service-worker.js"
